@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ढोल पाठशाळा · Dhol Pathshala</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --saffron:#F08214;
+    --saffron-deep:#C9620A;
+    --maroon:#4A140E;
+    --maroon-deep:#2B0B07;
+    --night:#1C0B07;
+    --gold:#D9A441;
+    --gold-soft:#B8853A;
+    --cream:#F3E2C0;
+    --wood:#8A4A20;
+    --display:'Yatra One', system-ui, serif;
+    --body:'Mukta', system-ui, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--night);
+    color:var(--cream);
+    font-family:var(--body);
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--saffron);color:var(--maroon-deep)}
+
+  /* ---------- Header ---------- */
+  header{
+    text-align:center;
+    padding:34px 20px 10px;
+    position:relative;
+    z-index:5;
+  }
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:400;
+    font-size:clamp(40px,7vw,72px);
+    line-height:1.05;
+    margin:10px 0 4px;
+    color:var(--saffron);
+    text-shadow:0 3px 0 rgba(0,0,0,.45);
+  }
+  .sub{
+    color:var(--cream);
+    opacity:.85;
+    font-size:clamp(15px,2vw,18px);
+    font-weight:300;
+    max-width:560px;
+    margin:0 auto;
+  }
+  .motif{
+    width:min(420px,70vw);
+    margin:18px auto 0;
+    display:block;
+    opacity:.9;
+  }
+
+  /* ---------- Stage ---------- */
+  .stage-wrap{
+    position:relative;
+    max-width:1060px;
+    margin:26px auto 0;
+    padding:0 16px;
+  }
+  .stage{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(217,164,65,.4);
+    box-shadow:0 30px 80px rgba(0,0,0,.6), inset 0 0 0 1px rgba(0,0,0,.4);
+    background:linear-gradient(#3a1208 0%, #6E2410 38%, #B5500F 62%, #E07313 78%, #4A2008 78.2%, #220C05 100%);
+  }
+  .stage svg{display:block;width:100%;height:auto}
+
+  /* flag wave */
+  .flag-cloth{
+    transform-origin:0px 0px;
+    animation:flagwave 2.6s ease-in-out infinite;
+  }
+  @keyframes flagwave{
+    0%,100%{transform:skewY(0deg) scaleX(1)}
+    50%{transform:skewY(-3deg) scaleX(.97)}
+  }
+
+  /* drifting battle dust */
+  .dust{animation:dustdrift 14s linear infinite;opacity:.18}
+  .dust.d2{animation-duration:22s;animation-delay:-8s;opacity:.12}
+  @keyframes dustdrift{
+    from{transform:translateX(-12%)}
+    to{transform:translateX(12%)}
+  }
+
+  /* arms — pivot points set inline via transform-origin */
+  .arm{transition:transform .16s ease-out}
+  .arm-left{transform:rotate(20deg)}
+  .arm-left.raise{transform:rotate(70deg);transition:transform .3s ease-out}
+  .arm-left.strike{transform:rotate(0deg);transition:transform .07s ease-in}
+  .arm-right{transform:rotate(0deg)}
+  .arm-right.strike{transform:rotate(118deg);transition:transform .09s ease-in}
+
+  /* bol word flying out of the drum on each strike */
+  .word-pop{opacity:0;font-family:var(--display);transform-box:fill-box;transform-origin:center}
+  .word-pop.go{animation:wordpop .7s ease-out forwards}
+  @keyframes wordpop{
+    0%{opacity:0;transform:translateY(8px) scale(.55)}
+    18%{opacity:1}
+    100%{opacity:0;transform:translateY(-46px) scale(1.3)}
+  }
+
+  /* drumhead pulse rings */
+  .ring{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.4)}
+  .ring.go{animation:ringout .45s ease-out forwards}
+  @keyframes ringout{
+    0%{opacity:.85;transform:scale(.4)}
+    100%{opacity:0;transform:scale(1.6)}
+  }
+
+  /* warrior breathing idle */
+  .warrior{transform-origin:480px 540px;animation:breathe 3.4s ease-in-out infinite}
+  @keyframes breathe{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-3px)}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .flag-cloth,.dust,.warrior{animation:none}
+    .arm{transition:none}
+  }
+
+  /* ---------- Bol rail ---------- */
+  .bol-section{max-width:1060px;margin:30px auto 0;padding:0 16px}
+  .rail-label{
+    display:flex;align-items:center;gap:14px;
+    margin-bottom:14px;
+  }
+  .rail-label .tag{
+    font-family:var(--display);
+    color:var(--gold);
+    font-size:22px;
+  }
+  .rail-label .line{flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+  .bol-rail{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .bol{flex:1 1 0;min-width:104px;cursor:pointer}
+  /* half-beat strokes (the quick dhin-dhin) */
+  .bol.half{flex:.62 1 0;min-width:78px;background:linear-gradient(180deg,#3A150C,#250C06)}
+  .bol.half .dev{font-size:clamp(26px,3.6vw,40px)}
+  .bol.half .rom::after{content:" ·½";opacity:.7}
+  /* the slight pause */
+  .bol.rest{opacity:.55;border-style:dashed;cursor:default}
+  .bol.rest .dev{color:var(--gold-soft)}
+  .bol{
+    background:linear-gradient(180deg,#34110A,#230B06);
+    border:1px solid rgba(217,164,65,.35);
+    border-radius:14px;
+    padding:22px 10px 18px;
+    text-align:center;
+    position:relative;
+    transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  }
+  .bol .dev{
+    font-family:var(--display);
+    font-size:clamp(34px,5vw,54px);
+    color:var(--cream);
+    line-height:1.1;
+  }
+  .bol .rom{
+    font-size:14px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);margin-top:6px;font-weight:600;
+  }
+  .bol .hand-tag{
+    margin-top:10px;
+    display:inline-block;
+    font-size:12.5px;
+    color:var(--cream);
+    opacity:.7;
+    border:1px solid rgba(243,226,192,.25);
+    border-radius:999px;
+    padding:3px 12px;
+  }
+  .bol.active{
+    border-color:var(--saffron);
+    box-shadow:0 0 0 2px rgba(240,130,20,.55), 0 8px 30px rgba(240,130,20,.3);
+    transform:translateY(-4px);
+  }
+  .bol.active .dev{color:var(--saffron)}
+
+  /* ---------- Controls ---------- */
+  .controls{
+    max-width:1060px;
+    margin:22px auto 0;
+    padding:0 16px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:center;
+    justify-content:center;
+  }
+  .btn{
+    font-family:var(--body);
+    font-weight:600;
+    font-size:16px;
+    border:none;
+    cursor:pointer;
+    border-radius:12px;
+    padding:14px 30px;
+    letter-spacing:.04em;
+    transition:transform .1s ease, filter .15s ease;
+  }
+  .btn:active{transform:scale(.96)}
+  .btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .btn-play{
+    background:linear-gradient(180deg,var(--saffron),var(--saffron-deep));
+    color:#2B0B07;
+    box-shadow:0 6px 0 #7E3D06, 0 12px 26px rgba(240,130,20,.35);
+  }
+  .btn-play:hover{filter:brightness(1.07)}
+  .btn-tap{
+    background:#34110A;
+    color:var(--cream);
+    border:1px solid rgba(217,164,65,.45);
+  }
+  .btn-tap:hover{border-color:var(--gold);color:var(--gold)}
+  .tempo{
+    display:flex;align-items:center;gap:12px;
+    background:#260D07;
+    border:1px solid rgba(217,164,65,.3);
+    border-radius:12px;
+    padding:10px 18px;
+  }
+  .tempo label{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .tempo input[type=range]{accent-color:var(--saffron);width:150px}
+  .tempo .bpm{font-weight:700;color:var(--cream);min-width:64px;text-align:right}
+  .mode-toggle{
+    display:flex;
+    background:#260D07;
+    border:1px solid rgba(217,164,65,.3);
+    border-radius:12px;
+    padding:5px;
+    gap:5px;
+  }
+  .mode-btn{
+    font-family:var(--body);
+    font-weight:600;
+    font-size:15px;
+    border:none;
+    cursor:pointer;
+    border-radius:8px;
+    padding:9px 16px;
+    background:transparent;
+    color:var(--cream);
+    opacity:.7;
+    transition:opacity .15s, background .15s;
+  }
+  .mode-btn:hover{opacity:1}
+  .mode-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .mode-btn.active{
+    background:linear-gradient(180deg,var(--saffron),var(--saffron-deep));
+    color:#2B0B07;
+    opacity:1;
+  }
+
+  /* ---------- Haat selector ---------- */
+  .haat-section{max-width:1060px;margin:46px auto 0;padding:0 16px}
+  .haat-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:12px;
+  }
+  .haat{
+    border-radius:14px;
+    padding:18px 14px;
+    text-align:center;
+    border:1px solid rgba(217,164,65,.3);
+    background:#230B06;
+    cursor:pointer;
+    transition:border-color .15s, transform .12s;
+    color:var(--cream);
+    font-family:var(--body);
+  }
+  .haat .num{font-family:var(--display);font-size:30px;color:var(--gold);display:block}
+  .haat .nm{font-size:14px;opacity:.85;margin-top:4px;display:block}
+  .haat.selected{
+    border-color:var(--saffron);
+    background:linear-gradient(180deg,#3E1409,#2A0D06);
+    box-shadow:0 0 0 2px rgba(240,130,20,.45);
+  }
+  .haat.locked{cursor:not-allowed;opacity:.45}
+  .haat.locked .nm{font-style:italic}
+  .haat:not(.locked):hover{transform:translateY(-3px)}
+  .haat:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  /* ---------- Custom notes panel ---------- */
+  .custom-panel{
+    display:none;
+    margin-top:16px;
+    background:linear-gradient(180deg,#2E0F08,#1F0A05);
+    border:1px solid rgba(217,164,65,.35);
+    border-radius:14px;
+    padding:20px;
+  }
+  .custom-panel.show{display:block}
+  .custom-row{display:flex;gap:12px;flex-wrap:wrap}
+  .custom-row input{
+    flex:1;
+    min-width:220px;
+    background:#190A05;
+    border:1px solid rgba(217,164,65,.4);
+    border-radius:10px;
+    color:var(--cream);
+    font-family:var(--body);
+    font-size:17px;
+    padding:13px 16px;
+  }
+  .custom-row input:focus{outline:2px solid var(--saffron);border-color:var(--saffron)}
+  .custom-panel .hint{margin-top:12px;font-size:14px;font-weight:300;opacity:.85;line-height:1.6}
+  .custom-panel .hint strong{color:var(--gold);font-weight:600}
+  .custom-error{margin-top:8px;font-size:14px;color:#FF9D6B;font-weight:600;min-height:1em}
+
+  /* ---------- Learn cards ---------- */
+  .learn{max-width:1060px;margin:46px auto 70px;padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{
+    background:linear-gradient(180deg,#2E0F08,#1F0A05);
+    border:1px solid rgba(217,164,65,.3);
+    border-radius:16px;
+    padding:26px;
+  }
+  .card h3{
+    font-family:var(--display);
+    color:var(--saffron);
+    font-weight:400;
+    font-size:26px;
+    margin-bottom:8px;
+  }
+  .card p{font-weight:300;line-height:1.65;opacity:.9;font-size:15.5px}
+  .card .chip{
+    display:inline-block;margin-top:14px;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--gold);border:1px solid rgba(217,164,65,.45);
+    border-radius:999px;padding:4px 14px;font-weight:600;
+  }
+  footer{
+    text-align:center;padding:26px;color:var(--gold-soft);
+    font-size:13px;letter-spacing:.2em;text-transform:uppercase;
+    border-top:1px solid rgba(217,164,65,.18);
+  }
+  @media(max-width:680px){
+    .learn{grid-template-columns:1fr}
+    .bol .hand-tag{font-size:11px;padding:3px 8px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">हर हर महादेव</div>
+  <h1>ढोल पाठशाळा</h1>
+  <p class="sub">Learn the traditional Maharashtrian dhol — one haat at a time. Thapi in the left hand, thoka in the right.</p>
+  <svg class="motif" viewBox="0 0 420 26" aria-hidden="true">
+    <g fill="none" stroke="#D9A441" stroke-width="1.4">
+      <path d="M0 13 H160 M260 13 H420"/>
+      <path d="M210 3 L222 13 L210 23 L198 13 Z"/>
+      <circle cx="180" cy="13" r="3.4"/>
+      <circle cx="240" cy="13" r="3.4"/>
+    </g>
+    <circle cx="210" cy="13" r="3.6" fill="#F08214"/>
+  </svg>
+</header>
+
+<!-- ======================= STAGE ======================= -->
+<div class="stage-wrap">
+  <div class="stage" role="img" aria-label="A Marathi woman in a nauwari saree playing a steel dhol on a battlefield at dusk, with a fort and saffron flag in the background">
+  <svg viewBox="0 0 960 620" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#FFE3A1"/>
+        <stop offset="60%" stop-color="#F6A93B"/>
+        <stop offset="100%" stop-color="#F08214" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="metalg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#E8EDF2"/>
+        <stop offset="35%" stop-color="#BCC5CE"/>
+        <stop offset="65%" stop-color="#97A1AB"/>
+        <stop offset="100%" stop-color="#5E666F"/>
+      </linearGradient>
+    </defs>
+
+    <!-- setting sun -->
+    <circle cx="480" cy="430" r="190" fill="url(#sun)" opacity=".8"/>
+    <circle cx="480" cy="430" r="92" fill="#FFD98F" opacity=".9"/>
+
+    <!-- distant fort silhouette (Raigad-inspired) -->
+    <g fill="#3A1409" opacity=".92">
+      <path d="M0 470 L0 430 L60 430 L60 410 L78 410 L78 430 L140 430 L140 396
+               L158 396 L158 380 L176 380 L176 396 L194 396 L194 430 L260 430 L260 452 L0 470 Z"/>
+      <path d="M960 470 L960 424 L900 424 L900 404 L884 404 L884 424 L830 424 L830 392
+               L812 392 L812 376 L795 376 L795 392 L778 392 L778 424 L720 424 L720 452 L960 470 Z"/>
+      <!-- fort tower with flag -->
+      <path d="M640 452 L640 360 L632 360 L632 340 L656 320 L680 340 L680 360 L672 360 L672 452 Z"/>
+    </g>
+    <!-- jari patka flag -->
+    <g transform="translate(656,236)">
+      <rect x="-2" y="0" width="4" height="86" fill="#2B0B07"/>
+      <g class="flag-cloth">
+        <path d="M2 4 L96 22 L2 56 Z" fill="#F08214"/>
+        <path d="M2 4 L96 22 L2 56 Z" fill="none" stroke="#D9A441" stroke-width="1.6" opacity=".7"/>
+      </g>
+      <circle cx="0" cy="0" r="5" fill="#D9A441"/>
+    </g>
+
+    <!-- spears of the army on horizon -->
+    <g stroke="#2E0F08" stroke-width="3" opacity=".85">
+      <line x1="80" y1="468" x2="92" y2="398"/><line x1="120" y1="468" x2="118" y2="392"/>
+      <line x1="855" y1="468" x2="868" y2="396"/><line x1="905" y1="468" x2="900" y2="402"/>
+    </g>
+    <g fill="#2E0F08" opacity=".85">
+      <path d="M92 398 l-7 16 14 0 Z"/><path d="M118 392 l-7 16 14 0 Z"/>
+      <path d="M868 396 l-7 16 14 0 Z"/><path d="M900 402 l-7 16 14 0 Z"/>
+    </g>
+
+    <!-- ground -->
+    <path d="M0 484 Q240 462 480 480 Q720 498 960 478 L960 620 L0 620 Z" fill="#241008"/>
+    <path d="M0 510 Q300 492 960 508 L960 620 L0 620 Z" fill="#190A05"/>
+
+    <!-- drifting dust -->
+    <g class="dust"><ellipse cx="240" cy="500" rx="190" ry="16" fill="#E8A35C"/></g>
+    <g class="dust d2"><ellipse cx="730" cy="514" rx="230" ry="14" fill="#E8A35C"/></g>
+
+    <!-- ============ PLAYER: Marathi woman in nauwari, facing forward ============ -->
+    <g class="warrior">
+
+      <!-- kashta-wrapped legs in a steady stance (mostly behind the dhol) -->
+      <path d="M462 530 Q450 556 438 576" stroke="#1F6B3A" stroke-width="16" fill="none" stroke-linecap="round"/>
+      <path d="M502 530 Q514 556 528 576" stroke="#1F6B3A" stroke-width="16" fill="none" stroke-linecap="round"/>
+      <!-- ankles with payal -->
+      <path d="M438 576 L434 584" stroke="#C98A52" stroke-width="10" stroke-linecap="round"/>
+      <path d="M528 576 L532 584" stroke="#C98A52" stroke-width="10" stroke-linecap="round"/>
+      <path d="M431 580 l9 3 M526 580 l9 3" stroke="#E8EDF2" stroke-width="1.8"/>
+      <!-- footwear -->
+      <path d="M414 584 l28 2 q4 8 -2 11 l-36 -2 q-1 -8 10 -11 Z" fill="#1C0B07"/>
+      <path d="M524 586 l28 -2 q11 3 10 11 l-36 2 q-6 -3 -2 -11 Z" fill="#1C0B07"/>
+
+      <!-- nauwari bodice -->
+      <path d="M444 388 Q482 366 520 388 Q534 436 528 482 Q482 496 436 482 Q430 436 444 388 Z" fill="#1F6B3A"/>
+      <!-- padar (pallu) crossing from her right shoulder to left hip, gold border -->
+      <path d="M452 392 Q486 430 516 472" stroke="#155028" stroke-width="14" fill="none"/>
+      <path d="M457 388 Q491 428 521 468" stroke="#D9A441" stroke-width="2.6" fill="none"/>
+      <!-- gold blouse trim at neckline -->
+      <path d="M462 390 q20 -10 40 0" stroke="#D9A441" stroke-width="3" fill="none"/>
+
+      <!-- head, facing forward -->
+      <circle cx="482" cy="348" r="24" fill="#C98A52"/>
+      <!-- centre-parted hair -->
+      <path d="M457 344 Q458 317 482 315 Q506 317 507 344 Q500 326 482 326 Q464 326 457 344 Z" fill="#1A0D08"/>
+      <path d="M482 316 L482 326" stroke="#C98A52" stroke-width="1.4"/>
+      <!-- ambada peeking behind, with white gajra -->
+      <path d="M505 336 q12 4 10 18 q-8 -2 -12 -10 Z" fill="#1A0D08"/>
+      <g fill="#F7F3E8">
+        <circle cx="513" cy="342" r="2.4"/><circle cx="515" cy="348" r="2.4"/><circle cx="511" cy="353" r="2.4"/>
+      </g>
+      <!-- eyes with lashes -->
+      <circle cx="472" cy="346" r="2.3" fill="#2B0B07"/>
+      <circle cx="492" cy="346" r="2.3" fill="#2B0B07"/>
+      <path d="M468 341 q4 -2.5 8 0 M488 341 q4 -2.5 8 0" stroke="#2B0B07" stroke-width="1.4" fill="none"/>
+      <!-- chandrakor bindi -->
+      <circle cx="482" cy="331" r="3.6" fill="#C1351D"/>
+      <circle cx="482" cy="329.4" r="3.1" fill="#C98A52"/>
+      <!-- gentle smile -->
+      <path d="M475 361 q7 5 14 0" stroke="#8A2218" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <!-- nath on her left nostril -->
+      <path d="M486 352 q6 2 4 8" stroke="#D9A441" stroke-width="1.8" fill="none"/>
+      <circle cx="490" cy="359" r="1.4" fill="#F7F3E8"/>
+      <!-- earrings -->
+      <circle cx="458" cy="354" r="2.6" fill="#D9A441"/>
+      <circle cx="506" cy="354" r="2.6" fill="#D9A441"/>
+      <!-- necklace -->
+      <path d="M468 374 q14 9 28 0" stroke="#D9A441" stroke-width="2.2" fill="none"/>
+
+      <!-- straps over both shoulders down to the dhol -->
+      <path d="M452 392 q-44 44 -58 80" stroke="#7E3D14" stroke-width="8" fill="none"/>
+      <path d="M512 392 q46 44 62 80" stroke="#7E3D14" stroke-width="8" fill="none"/>
+
+      <!-- ============ STEEL DHOL, horizontal at the waist ============ -->
+      <!-- galvanized barrel -->
+      <rect x="368" y="468" width="228" height="92" rx="34" fill="url(#metalg)"/>
+      <!-- ridge bands around the barrel -->
+      <g stroke="#76808A" stroke-width="2.6" fill="none" opacity=".85">
+        <path d="M424 469 q-5 45 0 90"/>
+        <path d="M482 468 q-4 46 0 92"/>
+        <path d="M540 469 q5 45 0 90"/>
+      </g>
+      <!-- sheen along the top -->
+      <path d="M388 480 H576" stroke="#F2F6FA" stroke-width="4" opacity=".7" stroke-linecap="round"/>
+      <!-- white cotton rope lacing, crisscross -->
+      <g stroke="#EFEBDD" stroke-width="4.2" fill="none" stroke-linecap="round">
+        <path d="M392 470 L416 558 L440 470 L464 558 L488 470 L512 558 L536 470 L560 558 L584 470"/>
+        <path d="M392 558 L416 470 M560 470 L584 558"/>
+      </g>
+      <!-- knot cluster on top centre -->
+      <g fill="none" stroke="#EFEBDD" stroke-width="3.6">
+        <circle cx="482" cy="470" r="6"/>
+        <path d="M473 466 q9 -7 18 0"/>
+      </g>
+      <!-- steel rims -->
+      <rect x="368" y="468" width="13" height="92" rx="6.5" fill="#C6CDD4"/>
+      <rect x="583" y="468" width="13" height="92" rx="6.5" fill="#C6CDD4"/>
+      <!-- rust patches -->
+      <g fill="#B0653A" opacity=".9">
+        <circle cx="380" cy="478" r="3.4"/><circle cx="588" cy="552" r="3.6"/><circle cx="430" cy="556" r="2.8"/>
+      </g>
+
+      <!-- left drumhead (thapi side), worn skin -->
+      <ellipse cx="372" cy="514" rx="20" ry="46" fill="#E9DEC6" stroke="#AEB6BE" stroke-width="3.5"/>
+      <ellipse cx="372" cy="520" rx="9" ry="17" fill="#C9B795" opacity=".85"/>
+      <!-- right drumhead (thoka side), worn skin -->
+      <ellipse cx="592" cy="514" rx="20" ry="46" fill="#E9DEC6" stroke="#AEB6BE" stroke-width="3.5"/>
+      <ellipse cx="592" cy="512" rx="9" ry="17" fill="#C9B795" opacity=".85"/>
+
+      <!-- pulse rings on the two heads -->
+      <ellipse id="ringL" class="ring" cx="372" cy="514" rx="22" ry="48" fill="none" stroke="#F08214" stroke-width="4"/>
+      <ellipse id="ringR" class="ring" cx="592" cy="514" rx="22" ry="48" fill="none" stroke="#FFD98F" stroke-width="4"/>
+
+      <!-- bol words that fly out of each head -->
+      <text id="popTa" class="word-pop" x="330" y="446" text-anchor="middle" font-size="46"
+            fill="#F08214" stroke="#2B0B07" stroke-width="1" paint-order="stroke">ता</text>
+      <text id="popDhin" class="word-pop" x="640" y="440" text-anchor="middle" font-size="46"
+            fill="#F3E2C0" stroke="#2B0B07" stroke-width="1" paint-order="stroke">धिन</text>
+
+      <!-- ============ LEFT ARM (thapi — open palm on the left head) ============ -->
+      <g id="armL" class="arm arm-left" style="transform-origin:448px 404px">
+        <path d="M448 404 Q420 426 404 452" stroke="#1F6B3A" stroke-width="15" fill="none" stroke-linecap="round"/>
+        <path d="M404 452 Q392 472 384 490" stroke="#C98A52" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <!-- green bangles -->
+        <path d="M398 462 q-6 3 -9 8 M394 470 q-6 3 -9 8" stroke="#0E7A3C" stroke-width="3.4" fill="none"/>
+        <ellipse cx="380" cy="498" rx="11" ry="15" fill="#C98A52" transform="rotate(-22 380 498)"/>
+      </g>
+
+      <!-- ============ RIGHT ARM (thoka raised high — straight stick, round knob) ============ -->
+      <g id="armR" class="arm arm-right" style="transform-origin:516px 404px">
+        <path d="M516 404 Q548 392 560 372" stroke="#1F6B3A" stroke-width="15" fill="none" stroke-linecap="round"/>
+        <path d="M560 372 Q568 360 570 348" stroke="#C98A52" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <!-- green bangles -->
+        <path d="M560 366 q8 1 13 -3 M563 357 q8 1 13 -3" stroke="#0E7A3C" stroke-width="3.4" fill="none"/>
+        <circle cx="571" cy="344" r="10" fill="#C98A52"/>
+        <!-- thoka: straight shaft raised skyward -->
+        <line x1="571" y1="344" x2="589" y2="272" stroke="#C99B5A" stroke-width="7" stroke-linecap="round"/>
+        <!-- circular bulge at the top -->
+        <circle cx="591" cy="265" r="10" fill="#A66A2E" stroke="#7E4514" stroke-width="2"/>
+      </g>
+    </g>
+
+    <!-- foreground grass tufts -->
+    <g stroke="#120703" stroke-width="3" opacity=".9" fill="none">
+      <path d="M70 600 q4 -22 -4 -34 M82 600 q2 -16 10 -26"/>
+      <path d="M880 604 q4 -22 -4 -34 M892 604 q2 -16 10 -26"/>
+    </g>
+  </svg>
+  </div>
+</div>
+
+<!-- ======================= CONTROLS ======================= -->
+<div class="controls">
+  <button id="playBtn" class="btn btn-play" aria-pressed="false">▶&nbsp; Play the haat</button>
+  <button id="tapTa" class="btn btn-tap">Tap&nbsp;<strong>Ta</strong>&nbsp;· थापी</button>
+  <button id="tapDhin" class="btn btn-tap">Tap&nbsp;<strong>Dhin</strong>&nbsp;· ठोका</button>
+  <div class="mode-toggle" role="group" aria-label="Sound mode">
+    <button id="modeDhol" class="mode-btn active" aria-pressed="true">🥁 ढोल · Dhol</button>
+    <button id="modeBol" class="mode-btn" aria-pressed="false">🗣 बोल · Voice</button>
+  </div>
+  <div class="tempo">
+    <label for="tempo">Tempo</label>
+    <input type="range" id="tempo" min="50" max="160" value="90" step="2">
+    <span class="bpm" id="bpmLabel">90 bpm</span>
+  </div>
+</div>
+
+<!-- ======================= BOL RAIL ======================= -->
+<section class="bol-section" aria-label="Bol sequence for the selected haat">
+  <div class="rail-label">
+    <span class="tag" id="haatTitle">पहिला हात · The First Haat</span>
+    <span class="line"></span>
+  </div>
+  <div class="bol-rail" id="bolRail"></div>
+</section>
+
+<!-- ======================= HAAT SELECTOR ======================= -->
+<section class="haat-section" aria-label="Choose a haat">
+  <div class="rail-label">
+    <span class="tag">हात निवडा · Choose your Haat</span>
+    <span class="line"></span>
+  </div>
+  <div class="haat-grid" id="haatGrid">
+    <button class="haat selected" data-haat="0" aria-pressed="true"><span class="num">१</span><span class="nm">Ta Dhin Dhin</span></button>
+    <button class="haat" data-haat="1" aria-pressed="false"><span class="num">२</span><span class="nm">With a pause</span></button>
+    <button class="haat" data-haat="2" aria-pressed="false"><span class="num">३</span><span class="nm">Quick DhinDhin</span></button>
+    <button class="haat" data-haat="3" aria-pressed="false"><span class="num">४</span><span class="nm">Quick TaDhinDhin</span></button>
+    <button class="haat" data-haat="4" aria-pressed="false"><span class="num">५</span><span class="nm">Double Ta</span></button>
+    <button class="haat" data-haat="5" aria-pressed="false"><span class="num">६</span><span class="nm">स्वतःचा · Your notes</span></button>
+  </div>
+  <div class="custom-panel" id="customPanel">
+    <div class="custom-row">
+      <input type="text" id="customInput" value="Ta dhin dhin dhinta pause dhindhin dhin"
+             aria-label="Write your bols" spellcheck="false">
+      <button class="btn btn-play" id="customSet">Set notes</button>
+    </div>
+    <p class="hint">Write bols separated by spaces: <strong>ta</strong>, <strong>dhin</strong>, <strong>pause</strong>.
+       Join bols with no space for quick strokes — <strong>dhindhin</strong>, <strong>dhinta</strong>, <strong>tadhindhin</strong>.
+       Write <strong>ta^</strong> to raise the left hand high before that ta.</p>
+    <p class="custom-error" id="customError" role="alert"></p>
+  </div>
+</section>
+
+<!-- ======================= LEARN CARDS ======================= -->
+<section class="learn">
+  <div class="card">
+    <h3>थापी · Thapi</h3>
+    <p>The open left palm strikes the bass side of the dhol, producing the warm, rounded <strong>Ta</strong>. Keep the wrist loose and let the palm bounce off the skin — the sound should bloom, not slap flat.</p>
+    <span class="chip">Left hand · Bol: Ta</span>
+  </div>
+  <div class="card">
+    <h3>ठोका · Thoka</h3>
+    <p>The curved cane stick in the right hand cracks against the treble side for the sharp, ringing <strong>Dhin</strong>. The power comes from the wrist's snap, not the arm — strike and release in one motion.</p>
+    <span class="chip">Right hand · Bol: Dhin</span>
+  </div>
+</section>
+
+<footer>ढोल पाठशाळा · A tribute to the dhol-tasha pathaks of Maharashtra</footer>
+
+<script>
+(() => {
+  // ---------- Audio (Web Audio synthesis) ----------
+  let ctx = null;
+  const ensureCtx = () => {
+    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  };
+
+  // ---------- Real dhol samples (recorded thapi & thoka), base64-embedded ----------
+  const TA_B64 = "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";
+  const DHIN_B64 = "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qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqTEFNRTMuMTAwqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//twxG2DwAABpAAAACAAADSAAAAEqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpMQU1FMy4xMDCqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqv/7csRtA8AAAaQAAAAgAAA0gAAABKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
+  let taBuf = null, dhinBuf = null, samplesLoading = false;
+
+  function b64ToArrayBuffer(b64) {
+    const bin = atob(b64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes.buffer;
+  }
+
+  function loadSamples() {
+    if (samplesLoading) return;
+    samplesLoading = true;
+    const ac = ensureCtx();
+    ac.decodeAudioData(b64ToArrayBuffer(TA_B64)).then(b => taBuf = b).catch(() => {});
+    ac.decodeAudioData(b64ToArrayBuffer(DHIN_B64)).then(b => dhinBuf = b).catch(() => {});
+  }
+
+  function playSample(buf, gain) {
+    const ac = ensureCtx(), t = ac.currentTime;
+    const src = ac.createBufferSource();
+    src.buffer = buf;
+    const g = ac.createGain();
+    g.gain.value = gain;
+    src.connect(g).connect(ac.destination);
+    src.start(t);
+  }
+
+  function noiseBuffer(ac, dur = 0.2) {
+    const len = Math.max(1, Math.floor(ac.sampleRate * dur));
+    const buf = ac.createBuffer(1, len, ac.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+    return buf;
+  }
+
+  // ---------- Voice bols (formant speech synthesis) ----------
+  // "ta" — a sharp 't' tongue-tap, then an open "aa" vowel.
+  function voiceTa() {
+    const ac = ensureCtx(), t = ac.currentTime;
+
+    // 't' — the tongue-tap consonant: a tiny sharp burst
+    const burst = ac.createBufferSource();
+    burst.buffer = noiseBuffer(ac, 0.02);
+    const hf = ac.createBiquadFilter();
+    hf.type = 'highpass'; hf.frequency.value = 2800;
+    const bg = ac.createGain();
+    bg.gain.setValueAtTime(0.5, t);
+    bg.gain.exponentialRampToValueAtTime(0.001, t + 0.025);
+    burst.connect(hf).connect(bg).connect(ac.destination);
+    burst.start(t);
+
+    // 'aa' — the voiced vowel, with a slight natural pitch fall
+    const v = t + 0.018;
+    const src = ac.createOscillator();
+    src.type = 'sawtooth';
+    src.frequency.setValueAtTime(200, v);
+    src.frequency.exponentialRampToValueAtTime(158, v + 0.2);
+
+    const master = ac.createGain();
+    master.gain.setValueAtTime(0.0001, v);
+    master.gain.exponentialRampToValueAtTime(0.85, v + 0.014);
+    master.gain.setValueAtTime(0.85, v + 0.09);
+    master.gain.exponentialRampToValueAtTime(0.001, v + 0.24);
+    master.connect(ac.destination);
+
+    // vocal-tract formants for the open "aa" vowel
+    const formants = [[760, 5, 1.0], [1150, 8, 0.55], [2550, 10, 0.3]];
+    for (const [f, q, g] of formants) {
+      const bp = ac.createBiquadFilter();
+      bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = q;
+      const fg = ac.createGain(); fg.gain.value = g;
+      src.connect(bp).connect(fg).connect(master);
+    }
+    src.start(v); src.stop(v + 0.28);
+  }
+
+  // "dhin" — a soft voiced 'dh', a bright 'i' vowel, closing into an 'n' hum.
+  function voiceDhin() {
+    const ac = ensureCtx(), t = ac.currentTime;
+
+    // 'dh' — soft voiced burst
+    const burst = ac.createBufferSource();
+    burst.buffer = noiseBuffer(ac, 0.025);
+    const lf = ac.createBiquadFilter();
+    lf.type = 'lowpass'; lf.frequency.value = 900;
+    const bg = ac.createGain();
+    bg.gain.setValueAtTime(0.4, t);
+    bg.gain.exponentialRampToValueAtTime(0.001, t + 0.03);
+    burst.connect(lf).connect(bg).connect(ac.destination);
+    burst.start(t);
+
+    // 'i' vowel — voiced source through close-vowel formants
+    const v = t + 0.02;
+    const src = ac.createOscillator();
+    src.type = 'sawtooth';
+    src.frequency.setValueAtTime(210, v);
+    src.frequency.exponentialRampToValueAtTime(165, v + 0.22);
+
+    const master = ac.createGain();
+    master.gain.setValueAtTime(0.0001, v);
+    master.gain.exponentialRampToValueAtTime(0.8, v + 0.016);
+    master.gain.setValueAtTime(0.8, v + 0.1);
+    master.gain.exponentialRampToValueAtTime(0.001, v + 0.26);
+    master.connect(ac.destination);
+
+    const formants = [[330, 6, 1.0], [2050, 9, 0.4], [2800, 10, 0.22]];
+    for (const [f, q, g] of formants) {
+      const bp = ac.createBiquadFilter();
+      bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = q;
+      const fg = ac.createGain(); fg.gain.value = g;
+      src.connect(bp).connect(fg).connect(master);
+    }
+    src.start(v); src.stop(v + 0.3);
+
+    // 'n' — short nasal hum tail
+    const n = ac.createOscillator();
+    n.type = 'triangle';
+    n.frequency.setValueAtTime(170, v + 0.12);
+    const nl = ac.createBiquadFilter();
+    nl.type = 'lowpass'; nl.frequency.value = 450;
+    const ng = ac.createGain();
+    ng.gain.setValueAtTime(0.0001, v + 0.12);
+    ng.gain.exponentialRampToValueAtTime(0.3, v + 0.15);
+    ng.gain.exponentialRampToValueAtTime(0.001, v + 0.3);
+    n.connect(nl).connect(ng).connect(ac.destination);
+    n.start(v + 0.12); n.stop(v + 0.32);
+  }
+
+  // ---------- Dhol-mode Ta: a mild hand slap on the skin ----------
+  function slapTa() {
+    const ac = ensureCtx(), t = ac.currentTime;
+
+    // the slap itself
+    const n = ac.createBufferSource();
+    n.buffer = noiseBuffer(ac, 0.09);
+    const bp = ac.createBiquadFilter();
+    bp.type = 'bandpass'; bp.frequency.value = 1100; bp.Q.value = 0.8;
+    const ng = ac.createGain();
+    ng.gain.setValueAtTime(0.65, t);
+    ng.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
+    n.connect(bp).connect(ng).connect(ac.destination);
+    n.start(t);
+
+    // fleshy body of the palm
+    const n2 = ac.createBufferSource();
+    n2.buffer = noiseBuffer(ac, 0.06);
+    const lp = ac.createBiquadFilter();
+    lp.type = 'lowpass'; lp.frequency.value = 480;
+    const ng2 = ac.createGain();
+    ng2.gain.setValueAtTime(0.35, t);
+    ng2.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+    n2.connect(lp).connect(ng2).connect(ac.destination);
+    n2.start(t);
+
+    // mild membrane thump underneath
+    const osc = ac.createOscillator();
+    const g = ac.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(120, t);
+    osc.frequency.exponentialRampToValueAtTime(76, t + 0.12);
+    g.gain.setValueAtTime(0.32, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    osc.connect(g).connect(ac.destination);
+    osc.start(t); osc.stop(t + 0.24);
+  }
+
+  // Dhin — thoka: the wooden stick striking the drumhead.
+  // Hard wood "tick" on contact, taut skin crack, and the barrel's body resonating.
+  function synthDhin() {
+    const ac = ensureCtx(), t = ac.currentTime;
+
+    // 1) wood contact click — tiny, bright, instantaneous
+    const click = ac.createBufferSource();
+    click.buffer = noiseBuffer(ac, 0.015);
+    const cf = ac.createBiquadFilter();
+    cf.type = 'bandpass'; cf.frequency.value = 4200; cf.Q.value = 1.8;
+    const cg = ac.createGain();
+    cg.gain.setValueAtTime(0.55, t);
+    cg.gain.exponentialRampToValueAtTime(0.001, t + 0.02);
+    click.connect(cf).connect(cg).connect(ac.destination);
+    click.start(t);
+
+    // 2) taut skin crack — the main voice of the stroke
+    const osc = ac.createOscillator();
+    const g = ac.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(310, t);
+    osc.frequency.exponentialRampToValueAtTime(165, t + 0.09);
+    g.gain.setValueAtTime(0.6, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    osc.connect(g).connect(ac.destination);
+    osc.start(t); osc.stop(t + 0.25);
+
+    // 3) high ring of the stretched head
+    const o2 = ac.createOscillator();
+    const g2 = ac.createGain();
+    o2.type = 'sine';
+    o2.frequency.setValueAtTime(540, t);
+    o2.frequency.exponentialRampToValueAtTime(440, t + 0.16);
+    g2.gain.setValueAtTime(0.12, t);
+    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    o2.connect(g2).connect(ac.destination);
+    o2.start(t); o2.stop(t + 0.24);
+
+    // 4) the wooden barrel's low body resonance underneath
+    const o3 = ac.createOscillator();
+    const g3 = ac.createGain();
+    o3.type = 'sine';
+    o3.frequency.setValueAtTime(115, t);
+    o3.frequency.exponentialRampToValueAtTime(82, t + 0.14);
+    g3.gain.setValueAtTime(0.25, t);
+    g3.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+    o3.connect(g3).connect(ac.destination);
+    o3.start(t); o3.stop(t + 0.22);
+  }
+
+  // ---------- Sound mode: 'dhol' (drum sounds) or 'bol' (spoken bols) ----------
+  let soundMode = 'dhol';
+
+  function playTa() {
+    if (soundMode === 'bol') voiceTa();
+    else slapTa();
+  }
+  function playDhin() {
+    if (soundMode === 'bol') { voiceDhin(); return; }
+    loadSamples();
+    dhinBuf ? playSample(dhinBuf, 1.0) : synthDhin();
+  }
+
+  const modeDhol = document.getElementById('modeDhol');
+  const modeBol = document.getElementById('modeBol');
+  function setMode(m) {
+    soundMode = m;
+    modeDhol.classList.toggle('active', m === 'dhol');
+    modeBol.classList.toggle('active', m === 'bol');
+    modeDhol.setAttribute('aria-pressed', m === 'dhol');
+    modeBol.setAttribute('aria-pressed', m === 'bol');
+  }
+  modeDhol.addEventListener('click', () => setMode('dhol'));
+  modeBol.addEventListener('click', () => setMode('bol'));
+
+  // ---------- Visuals ----------
+  const armL = document.getElementById('armL');
+  const armR = document.getElementById('armR');
+  const ringL = document.getElementById('ringL');
+  const ringR = document.getElementById('ringR');
+  const popTa = document.getElementById('popTa');
+  const popDhin = document.getElementById('popDhin');
+
+  function retrigger(el, cls) {
+    el.classList.remove(cls);
+    void el.getBoundingClientRect(); // force reflow
+    el.classList.add(cls);
+  }
+
+  function strike(arm, ring, pop) {
+    retrigger(arm, 'strike');
+    retrigger(ring, 'go');
+    retrigger(pop, 'go');
+    setTimeout(() => arm.classList.remove('strike'), 120);
+  }
+
+  function hitTa()   { armL.classList.remove('raise'); playTa(); strike(armL, ringL, popTa); }
+  function hitDhin() { playDhin(); strike(armR, ringR, popDhin); }
+
+  // ---------- Haat patterns ----------
+  // dur is in beats: 1 = full beat, 0.5 = quick stroke / slight pause
+  const TA    = { bol:'ta',   dur:1 };
+  const TA_UP = { bol:'ta',   dur:1, flourish:true };  // ta with the left hand raised high first
+  const DHIN  = { bol:'dhin', dur:1 };
+  const DHINQ = { bol:'dhin', dur:0.5, half:true };   // quick dhin, no gap
+  const TAQ   = { bol:'ta',   dur:0.5, half:true };   // quick ta, no gap (for Dhinta / Tadhindhin)
+  const R     = n => ({ bol:'rest', dur:n });          // pause of n beats
+
+  const HAATS = [
+    {
+      title:'\u092a\u0939\u093f\u0932\u093e \u0939\u093e\u0924 \u00b7 The First Haat',
+      steps:[ TA, DHIN, DHIN ]
+    },
+    {
+      title:'\u0926\u0941\u0938\u0930\u093e \u0939\u093e\u0924 \u00b7 The Second Haat',
+      // Ta Dhin Dhin pause Dhinta dhin dhin
+      steps:[ TA, DHIN, DHIN, R(0.5), DHINQ, TAQ, DHIN, DHIN ]
+    },
+    {
+      title:'\u0924\u093f\u0938\u0930\u093e \u0939\u093e\u0924 \u00b7 The Third Haat',
+      // Ta dhin dhindhin pause dhinta dhin dhin
+      steps:[ TA, DHIN, DHINQ, DHINQ, R(0.5), DHINQ, TAQ, DHIN, DHIN ]
+    },
+    {
+      title:'\u091a\u094c\u0925\u093e \u0939\u093e\u0924 \u00b7 The Fourth Haat',
+      // Ta dhin dhin dhin tadhindhin pause dhin
+      steps:[ TA, DHIN, DHIN, DHIN, TAQ, DHINQ, DHINQ, R(0.5), DHIN ]
+    },
+    {
+      title:'\u092a\u093e\u091a\u0935\u093e \u0939\u093e\u0924 \u00b7 The Fifth Haat',
+      // Ta ta dhinta dhindhin pause Dhin Dhin  (left hand rises before the 2nd ta)
+      steps:[ TA, TA_UP, DHINQ, TAQ, DHINQ, DHINQ, R(0.5), DHIN, DHIN ]
+    },
+    {
+      title:'\u0938\u094d\u0935\u0924\u0903\u091a\u093e \u0939\u093e\u0924 \u00b7 Your Own Haat',
+      custom:true,
+      // starts with an example; replaced by whatever the user types
+      steps:[ TA, DHIN, DHIN, DHINQ, TAQ, R(0.5), DHINQ, DHINQ, DHIN ]
+    }
+  ];
+
+  let current = 0;
+  let cells = [];
+
+  const rail = document.getElementById('bolRail');
+  const haatTitle = document.getElementById('haatTitle');
+
+  function renderRail() {
+    const h = HAATS[current];
+    haatTitle.textContent = h.title;
+    rail.innerHTML = '';
+    cells = h.steps.map((s, i) => {
+      const div = document.createElement('div');
+      div.className = 'bol' + (s.half ? ' half' : '') + (s.bol === 'rest' ? ' rest' : '');
+      const isRest = s.bol === 'rest';
+      const dev = s.bol === 'ta' ? '\u0924\u093e' : s.bol === 'dhin' ? '\u0927\u093f\u0928'
+                : Array(Math.max(1, Math.round(s.dur))).fill('\u00b7').join(' ');
+      const rom = s.bol === 'ta' ? 'Ta' : s.bol === 'dhin' ? 'Dhin' : 'Pause';
+      const tag = s.flourish ? 'Left \u00b7 Thapi \u00b7 hand up \u2191'
+                : s.bol === 'ta' ? 'Left \u00b7 Thapi' : s.bol === 'dhin' ? 'Right \u00b7 Thoka'
+                : (s.dur === 0.5 ? '\u00bd beat' : s.dur + (s.dur === 1 ? ' beat' : ' beats'));
+      if (isRest) {
+        div.style.flex = (0.45 * s.dur) + ' 1 0';
+        div.style.minWidth = '64px';
+      }
+      div.innerHTML = '<div class="dev">' + dev + '</div>' +
+                      '<div class="rom">' + rom + '</div>' +
+                      '<span class="hand-tag">' + tag + '</span>';
+      if (!isRest) {
+        div.addEventListener('click', () => {
+          (s.bol === 'ta' ? hitTa : hitDhin)();
+          highlight(i);
+          setTimeout(() => highlight(-1), 300);
+        });
+      }
+      rail.appendChild(div);
+      return div;
+    });
+  }
+
+  function highlight(i) {
+    cells.forEach((c, k) => c.classList.toggle('active', k === i));
+  }
+
+  // ---------- Sequencer ----------
+  let playing = false, idx = 0, timer = null;
+  let bpm = 90;
+
+  const playBtn = document.getElementById('playBtn');
+  const tempoEl = document.getElementById('tempo');
+  const bpmLabel = document.getElementById('bpmLabel');
+
+  function step() {
+    if (!playing) return;
+    const steps = HAATS[current].steps;
+    const s = steps[idx];
+    if (s.bol === 'ta') hitTa();
+    else if (s.bol === 'dhin') hitDhin();
+    highlight(idx);
+    // if the NEXT stroke is a flourish ta, lift the left hand high now
+    const next = steps[(idx + 1) % steps.length];
+    if (next.flourish) setTimeout(() => { if (playing) armL.classList.add('raise'); }, 120);
+    const ms = s.dur * 60000 / bpm;
+    idx = (idx + 1) % steps.length;
+    timer = setTimeout(step, ms);
+  }
+
+  function start() {
+    ensureCtx();
+    loadSamples();
+    playing = true;
+    idx = 0;
+    playBtn.textContent = '\u25fc  Stop';
+    playBtn.setAttribute('aria-pressed', 'true');
+    step();
+  }
+
+  function stop() {
+    playing = false;
+    clearTimeout(timer);
+    armL.classList.remove('raise');
+    playBtn.innerHTML = '\u25b6&nbsp; Play the haat';
+    playBtn.setAttribute('aria-pressed', 'false');
+    highlight(-1);
+  }
+
+  playBtn.addEventListener('click', () => playing ? stop() : start());
+
+  tempoEl.addEventListener('input', () => {
+    bpm = +tempoEl.value;
+    bpmLabel.textContent = bpm + ' bpm';
+  });
+
+  // ---------- Haat selector ----------
+  const customPanel = document.getElementById('customPanel');
+  const customInput = document.getElementById('customInput');
+  const customError = document.getElementById('customError');
+
+  document.querySelectorAll('#haatGrid .haat:not(.locked)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const wasPlaying = playing;
+      if (playing) stop();
+      current = +btn.dataset.haat;
+      document.querySelectorAll('#haatGrid .haat').forEach(b => {
+        const sel = b === btn;
+        b.classList.toggle('selected', sel);
+        if (!b.disabled) b.setAttribute('aria-pressed', sel);
+      });
+      customPanel.classList.toggle('show', !!HAATS[current].custom);
+      renderRail();
+      if (wasPlaying) start();
+    });
+  });
+
+  // ---------- Custom notation parser ----------
+  // grammar: tokens separated by spaces
+  //   ta / dhin          -> full-beat strokes
+  //   pause              -> half-beat rest
+  //   joined bols        -> quick half-beat strokes (dhindhin, dhinta, tadhindhin...)
+  //   ta^                -> full-beat ta with the left hand raised high first
+  function parseNotes(str) {
+    const steps = [];
+    const toks = str.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    if (!toks.length) throw 'Write at least one bol \u2014 e.g. "ta dhin dhin"';
+    for (const raw of toks) {
+      if (raw === 'pause' || raw === '..') { steps.push({ bol:'rest', dur:0.5 }); continue; }
+      let tok = raw, flourish = false;
+      if (tok.endsWith('^')) { flourish = true; tok = tok.slice(0, -1); }
+      const parts = [];
+      let s = tok;
+      while (s.length) {
+        if (s.startsWith('dhin')) { parts.push('dhin'); s = s.slice(4); }
+        else if (s.startsWith('ta')) { parts.push('ta'); s = s.slice(2); }
+        else throw 'Couldn\u2019t read "' + raw + '" \u2014 use ta, dhin, pause, or joined bols like dhinta';
+      }
+      if (parts.length === 1) steps.push({ bol: parts[0], dur:1, flourish });
+      else parts.forEach(p => steps.push({ bol:p, dur:0.5, half:true }));
+    }
+    if (steps.every(s => s.bol === 'rest')) throw 'A haat needs at least one stroke, not only pauses';
+    return steps;
+  }
+
+  function applyCustom() {
+    try {
+      const steps = parseNotes(customInput.value);
+      customError.textContent = '';
+      const wasPlaying = playing;
+      if (playing) stop();
+      HAATS[5].steps = steps;
+      renderRail();
+      if (wasPlaying) start();
+    } catch (msg) {
+      customError.textContent = msg;
+    }
+  }
+
+  document.getElementById('customSet').addEventListener('click', applyCustom);
+  customInput.addEventListener('keydown', e => { if (e.key === 'Enter') applyCustom(); });
+
+  // manual taps for practice
+  document.getElementById('tapTa').addEventListener('click', () => { hitTa(); highlight(-1); });
+  document.getElementById('tapDhin').addEventListener('click', () => { hitDhin(); highlight(-1); });
+
+  // keyboard practice: T = ta, D = dhin, space = play/stop
+  window.addEventListener('keydown', e => {
+    if (e.repeat) return;
+    if (e.key === 't' || e.key === 'T') hitTa();
+    if (e.key === 'd' || e.key === 'D') hitDhin();
+    if (e.code === 'Space' && e.target === document.body) { e.preventDefault(); playing ? stop() : start(); }
+  });
+
+  renderRail();
+})();
+</script>
+</body>
+</html>
