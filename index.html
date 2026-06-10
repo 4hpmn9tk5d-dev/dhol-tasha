@@ -581,8 +581,8 @@
   <button id="tapTa" class="btn btn-tap">Tap&nbsp;<strong>Ta</strong>&nbsp;· थापी</button>
   <button id="tapDhin" class="btn btn-tap">Tap&nbsp;<strong>Dhin</strong>&nbsp;· ठोका</button>
   <div class="mode-toggle" role="group" aria-label="Sound mode">
-    <button id="modeDhol" class="mode-btn active" aria-pressed="true">🥁 ढोल · Dhol</button>
-    <button id="modeBol" class="mode-btn" aria-pressed="false">🗣 बोल · Voice</button>
+    <button id="modeDhol" class="mode-btn" aria-pressed="false">🥁 ढोल · Dhol</button>
+    <button id="modeBol" class="mode-btn active" aria-pressed="true">🗣 बोल · Voice</button>
   </div>
   <div class="tempo">
     <label for="tempo">Tempo</label>
@@ -873,7 +873,7 @@
   }
 
   // ---------- Sound mode: 'dhol' (drum sounds) or 'bol' (spoken bols) ----------
-  let soundMode = 'dhol';
+  let soundMode = 'bol';
 
   function playTa() {
     if (soundMode === 'bol') voiceTa();
