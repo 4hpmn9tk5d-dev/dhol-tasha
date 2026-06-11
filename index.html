@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ढोल पाठशाळा · Dhol Pathshala</title>
+<meta name="description" content="Learn the traditional Maharashtrian dhol — haats, bols, and rhythm practice.">
+<meta name="theme-color" content="#F08214">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -990,6 +997,11 @@
   });
 
   renderRail();
+
+  // PWA: enable offline use and Add to Home Screen
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
 })();
 </script>
 </body>
