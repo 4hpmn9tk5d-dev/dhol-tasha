@@ -550,8 +550,6 @@
 <!-- ======================= CONTROLS ======================= -->
 <div class="controls">
   <button id="playBtn" class="btn btn-play" aria-pressed="false">▶&nbsp; Play the haat</button>
-  <button id="tapTa" class="btn btn-tap">Tap&nbsp;<strong>Ta</strong>&nbsp;· थापी</button>
-  <button id="tapDhin" class="btn btn-tap">Tap&nbsp;<strong>Dhin</strong>&nbsp;· ठोका</button>
   <div class="tempo">
     <label for="tempo">Tempo</label>
     <input type="range" id="tempo" min="50" max="160" value="90" step="2">
@@ -982,10 +980,6 @@
 
   document.getElementById('customSet').addEventListener('click', applyCustom);
   customInput.addEventListener('keydown', e => { if (e.key === 'Enter') applyCustom(); });
-
-  // manual taps for practice
-  document.getElementById('tapTa').addEventListener('click', () => { hitTa(); highlight(-1); });
-  document.getElementById('tapDhin').addEventListener('click', () => { hitDhin(); highlight(-1); });
 
   // keyboard practice: T = ta, D = dhin, space = play/stop
   window.addEventListener('keydown', e => {
