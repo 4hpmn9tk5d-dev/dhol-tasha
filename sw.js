@@ -1,5 +1,5 @@
 // Dhol Pathshala service worker — cache-first so the app works fully offline.
-const CACHE = 'dhol-pathshala-v1';
+const CACHE = 'dhol-pathshala-v2';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
